@@ -11,12 +11,10 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.Vector2()
         self.speed = 300
 
-        # cooldown 
+
         self.can_shoot = True
         self.laser_shoot_time = 0
         self.cooldown_duration = 400
-
-        # mask 
         self.mask = pygame.mask.from_surface(self.image)
     
     def laser_timer(self):
@@ -115,7 +113,7 @@ def display_score():
     display_surface.blit(text_surf, text_rect)
     pygame.draw.rect(display_surface, (240,240,240), text_rect.inflate(20,10).move(0,-8), 5, 10)
 
-# general setup 
+#setup 
 pygame.init()
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
 display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -123,7 +121,7 @@ pygame.display.set_caption('Space shooter')
 running = True
 clock = pygame.time.Clock()
 
-# import
+#import
 star_surf = pygame.image.load(join('images', 'star.png')).convert_alpha()
 meteor_surf = pygame.image.load(join('images', 'meteor.png')).convert_alpha()
 laser_surf = pygame.image.load(join('images', 'laser.png')).convert_alpha()
@@ -135,10 +133,10 @@ laser_sound.set_volume(0.5)
 explosion_sound = pygame.mixer.Sound(join('audio', 'explosion.wav'))
 game_music = pygame.mixer.Sound(join('audio', 'game_music.wav'))
 game_music.set_volume(0.4)
-# game_music.play(loops= -1)
 
 
-# sprites 
+
+ 
 all_sprites = pygame.sprite.Group()
 meteor_sprites = pygame.sprite.Group()
 laser_sprites = pygame.sprite.Group()
@@ -146,7 +144,7 @@ for i in range(20):
     Star(all_sprites, star_surf) 
 player = Player(all_sprites)
 
-# custom events -> meteor event
+
 meteor_event = pygame.event.custom_type()
 pygame.time.set_timer(meteor_event, 200)
 
@@ -159,11 +157,11 @@ while running:
         if event.type == meteor_event:
             x, y = randint(0, WINDOW_WIDTH), randint(-200, -100)
             Meteor(meteor_surf, (x, y), (all_sprites, meteor_sprites))
-    # update
+
     all_sprites.update(dt)
     collisions()
 
-    # draw the game
+    
     display_surface.fill('#3a2e3f')
     display_score()
     all_sprites.draw(display_surface)
